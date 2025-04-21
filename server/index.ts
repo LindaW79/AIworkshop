@@ -1,6 +1,6 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
-import { serveStatic, log } from "./vite"; // Only serveStatic needed now
+import { serveStatic, log } from "./vite";
 
 const app = express();
 app.use(express.json());
@@ -20,9 +20,9 @@ app.use((req, res, next) => {
   res.on("finish", () => {
     const duration = Date.now() - start;
     if (path.startsWith("/api")) {
-      let logLine = \`\${req.method} \${path} \${res.statusCode} in \${duration}ms\`;
+      let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
       if (capturedJsonResponse) {
-        logLine += \` :: \${JSON.stringify(capturedJsonResponse)}\`;
+        logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
       }
 
       if (logLine.length > 80) {
@@ -47,7 +47,6 @@ app.use((req, res, next) => {
     throw err;
   });
 
-  // Serve static frontend (if needed)
   serveStatic(app);
 
   const port = 5000;
@@ -56,7 +55,6 @@ app.use((req, res, next) => {
     host: "0.0.0.0",
     reusePort: true,
   }, () => {
-    log(\`serving on port \${port}\`);
+    log(`serving on port ${port}`);
   });
 })();
-

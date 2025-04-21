@@ -22,4 +22,3 @@ export function serveStatic(app: express.Express) {
 export function log(message: string) {
   console.log(`[AIWorkshop] ${message}`);
 }
-
