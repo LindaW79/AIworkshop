@@ -2,6 +2,7 @@ import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 import fs from "fs";
+import type { Request, Response } from "express";
 
 export function serveStatic(app: express.Express) {
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -14,9 +15,10 @@ export function serveStatic(app: express.Express) {
 
   app.use("/", express.static(clientPath));
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(clientPath, "index.html"));
-  });
+app.get("*", (req: express.Request, res: express.Response) => {
+  res.sendFile(path.resolve(clientPath, "index.html"));
+});
+
 }
 
 export function log(message: string) {
