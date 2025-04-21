@@ -32,10 +32,28 @@ export default function Home() {
   } = useProfile();
 
   // Fetch cards from API
-  const { data: cardsData, isLoading } = useQuery<any[]>({
-    queryKey: ["/api/cards"],
-    staleTime: Infinity,
-  });
+import { useQuery } from "@tanstack/react-query";
+
+type TaskCardType = {
+  id: number | string;
+  title: string;
+  category: string;
+  difficulty: string;
+  tools: string[];
+};
+
+const fetchTasks = async (): Promise<TaskCardType[]> => {
+  const res = await fetch("https://aiworkshop.onrender.com/api/tasks");
+  if (!res.ok) throw new Error("Kunde inte hämta uppdrag.");
+  return res.json();
+};
+
+const { data: cardsData = [], isLoading } = useQuery<TaskCardType[]>({
+  queryKey: ["cards"],
+  queryFn: fetchTasks,
+  staleTime: Infinity,
+});
+
 
   // Convert card IDs to numbers for compatibility with API
   const cards = cardsData ? cardsData.map(card => ({
