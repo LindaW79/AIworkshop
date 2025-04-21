@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "title": "Generate an AI image",
+    "category": "image",
+    "tools": ["Bing Image Creator", "DALL·E"],
+    "difficulty": "easy"
+  },
+  {
+    "id": 2,
+    "title": "Write a meeting summary",
+    "category": "text",
+    "tools": ["ChatGPT"],
+    "difficulty": "medium"
+  }
+]
