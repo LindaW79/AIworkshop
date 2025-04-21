@@ -1,6 +1,6 @@
 import express from "express";
-import { serveStatic, log } from "./vite";
-import { registerRoutes } from "./routes";
+import { serveStatic, log } from "./vite.js";
+import { registerRoutes } from "./routes.js";
 
 const app = express();
 app.use(express.json());
@@ -19,3 +19,4 @@ app.use(express.json());
     log(`serving on port ${port}`);
   });
 })();
+
