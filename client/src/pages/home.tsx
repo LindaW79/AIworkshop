@@ -4,10 +4,9 @@ import { useQuery } from "@tanstack/react-query";
 import { CardDeck } from "@/components/ui/card-deck";
 import { TaskCard } from "@/components/ui/task-card";
 import { CardType, CardCategory, DrawnCards, ViewMode } from "@/lib/types";
-import { defaultCards, getCardsByCategory, categoryMetadata } from "@/lib/data";
+import { getCardsByCategory, categoryMetadata } from "@/lib/data";
 import { ProfileSelector } from "@/components/profile-selector";
 import { useProfile } from "@/hooks/use-profile";
-import { Button } from "@/components/ui/button";
 import { AlertCircle } from "lucide-react";
 
 type TaskCardType = {
@@ -36,12 +35,7 @@ export default function Home() {
     [CardCategory.VIDEO]: [],
   });
 
-  const { 
-    activeProfile, 
-    isCardCompleted, 
-    toggleCardCompletion,
-    resetProfile
-  } = useProfile();
+  const { activeProfile, isCardCompleted, toggleCardCompletion, resetProfile } = useProfile();
 
   const { data: cardsData = [], isLoading } = useQuery<TaskCardType[]>({
     queryKey: ["cards"],
@@ -97,9 +91,7 @@ export default function Home() {
       [CardCategory.MUSIC]: [],
       [CardCategory.VIDEO]: [],
     });
-    if (activeProfile) {
-      resetProfile();
-    }
+    if (activeProfile) resetProfile();
     setTimeout(() => {
       setIsCardAnimating(true);
     }, 300);
@@ -161,9 +153,7 @@ export default function Home() {
             <button 
               onClick={() => setViewMode("single")}
               className={`px-4 py-2 rounded-lg transition-colors font-medium ${
-                viewMode === "single" 
-                  ? "bg-blue-500 text-white" 
-                  : "bg-gray-200 hover:bg-gray-300"
+                viewMode === "single" ? "bg-blue-500 text-white" : "bg-gray-200 hover:bg-gray-300"
               }`}
             >
               Single Card View
@@ -171,9 +161,7 @@ export default function Home() {
             <button 
               onClick={() => setViewMode("all")}
               className={`px-4 py-2 rounded-lg transition-colors font-medium ${
-                viewMode === "all" 
-                  ? "bg-blue-500 text-white" 
-                  : "bg-gray-200 hover:bg-gray-300"
+                viewMode === "all" ? "bg-blue-500 text-white" : "bg-gray-200 hover:bg-gray-300"
               }`}
             >
               View All Cards
@@ -213,5 +201,19 @@ export default function Home() {
                 exit={{ opacity: 0 }}
                 className="h-80 w-full max-w-lg bg-white rounded-xl shadow-xl p-6 flex flex-col items-center justify-center"
               >
-                <svg className="w-12 h-12 text-gray-400 mb-4" fill="none
-
+                <svg className="w-12 h-12 text-gray-400 mb-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                <p className="text-gray-600 text-center">
+                  {Object.values(drawnCards).some(arr => arr.length > 0)
+                    ? "Click on a deck to draw a card"
+                    : "All decks have been reset. Click on a deck to draw a new card."}
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </main>
+    </div>
+  );
+}
